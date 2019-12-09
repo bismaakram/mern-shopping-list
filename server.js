@@ -7,12 +7,12 @@ const items = require("./routes/api/items");
 const path = require("path");
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://127.0.0.1:27017/list", { useNewUrlParser: true });
-const connection = mongoose.connection;
+const db = require("./config/keys").mongoURI;
 
-connection.once("open", function() {
-  console.log("MongoDB database connection established successfully");
-});
+mongoose
+  .connect(db)
+  .then(() => console.log("Mongo DB Connected.."))
+  .catch(err => console.log(err));
 
 app.use("/api/items", items);
 
