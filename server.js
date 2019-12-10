@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const PORT = 4000;
+const port = process.env.PORT || 5000;
 const app = express();
 const items = require("./routes/api/items");
 const path = require("path");
@@ -26,6 +26,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
-app.listen(PORT, function() {
-  console.log("Server is running on Port: " + PORT);
+app.listen(port, function() {
+  console.log("Server is running on Port: " + port);
 });
