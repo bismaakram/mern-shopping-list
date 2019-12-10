@@ -8,6 +8,10 @@ const path = require("path");
 app.use(bodyParser.json());
 
 const db = require("./config/keys").mongoURI;
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
+mongoose.set("useUnifiedTopology", true);
 
 mongoose
   .connect(db)
