@@ -1,24 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const jwt = require("jsonwebtoken");
 const port = process.env.PORT || 5000;
 const app = express();
 const path = require("path");
 app.use(express.json());
 
-const db = require("./config/keys").mongoURI;
+mongoose.connect("mongodb://127.0.0.1:27017/shoppinglist", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+const connection = mongoose.connection;
 
-mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log("Mongo DB Connected.."))
-  .catch(err => console.log(err));
+connection.once("open", function() {
+  console.log("MongoDB database connection established successfully..");
+});
 
 app.use("/api/items", require("./routes/api/items"));
 app.use("/api/users", require("./routes/api/users"));
+app.use("/api/auth", require("./routes/api/auth"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
